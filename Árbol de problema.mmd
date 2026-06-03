@@ -1,0 +1,29 @@
+graph TD
+    %% Efectos (Nivel Superior)
+    E1[Saturación de filas en cajas de cobro y salas de espera]
+    E2[Desfase en cascada de los horarios de citas médicas y terapias]
+    E3[Pérdida de continuidad clínica por comentarios incompletos o tardíos]
+    E4[Inasistencias no previstas por falta de canales de recordatorio]
+    
+    %% Problema Principal
+    P[PROBLEMA PRINCIPAL: Sistema de registro de asistencias lento, empalmado y dependiente de terminales fijas en el CRIT]
+    
+    %% Causas (Nivel Inferior)
+    C1[Infraestructura de red rígida basada en Máquinas Virtuales VM]
+    C2[Obligación de traslado físico de los terapeutas a equipos de cómputo fijos]
+    C3[Flujo administrativo acoplado: No se puede cobrar la sesión si no hay asistencia registrada]
+    C4[Ausencia de una plataforma móvil de captura rápida y optimizada]
+    C5[Falta de un sistema automatizado de notificaciones de citas para familias]
+
+    %% Enlaces de Relación Causas -> Problema -> Efectos
+    C1 --> P
+    C2 --> P
+    C3 --> P
+    C4 --> P
+    C5 --> P
+    P --> E1
+    P --> E2
+    P --> E3
+    P --> E4
+
+    style P fill:#f96,stroke:#333,stroke-width:2px
