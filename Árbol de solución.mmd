@@ -1,0 +1,29 @@
+graph TD
+    %% Fines (Nivel Superior)
+    F1[Flujo ágil en cajas de cobro y reducción drástica de tiempos de espera]
+    F2[Cumplimiento puntual y optimizado de la agenda de citas diarias]
+    F3[Bitácoras clínicas completas y actualizadas en tiempo real]
+    F4[Disminución del ausentismo mediante confirmaciones proactivas]
+    
+    %% Solución Central
+    S[SOLUCIÓN CENTRAL: Aplicación distribuida y móvil para la gestión instantánea de asistencias y comentarios]
+    
+    %% Medios (Nivel Inferior)
+    M1[Arquitectura desacoplada de las VM con API de integración a la Base de Datos]
+    M2[Registro de asistencia a pie de camilla / área de terapia mediante dispositivos móviles]
+    M3[Módulo de comentarios clínicos optimizado mediante plantillas o listas de verificación]
+    M4[Redundancia de datos local para operar de forma fluida aun sin conexión a internet estable]
+    M5[Sistema automatizado de notificaciones y recordatorios vía mensajería móvil]
+
+    %% Enlaces de Relación Medios -> Solución -> Fines
+    M1 --> S
+    M2 --> S
+    M3 --> S
+    M4 --> S
+    M5 --> S
+    S --> F1
+    S --> F2
+    S --> F3
+    S --> F4
+
+    style S fill:#6cf,stroke:#333,stroke-width:2px
