@@ -13,12 +13,25 @@ En Windows usa `127.0.0.1` para las URLs de PostgreSQL del host. Evita `localhos
 
 ## 1. Base de datos
 
+PowerShell:
+
 ```powershell
 cd C:\Users\esteb\apps\crit-project\crit-db
 Copy-Item .env.example .env -ErrorAction SilentlyContinue
 docker compose up --build --wait
 .\scripts\verify-db.ps1
 ```
+
+Git Bash/MINGW64:
+
+```bash
+cd ~/apps/crit-project/crit-db
+cp -n .env.example .env 2>/dev/null || true
+docker compose up --build --wait
+bash ./scripts/verify-db.sh
+```
+
+No uses `.\scripts\verify-db.ps1` en Git Bash: las diagonales invertidas se interpretan distinto y Bash termina buscando `.scriptsverify-db.ps1`.
 
 La verificacion debe terminar con:
 
@@ -46,6 +59,14 @@ Copy-Item .env.example .env -ErrorAction SilentlyContinue
 npm install
 ```
 
+En Git Bash:
+
+```bash
+cd ~/apps/crit-project/crit-api
+cp -n .env.example .env 2>/dev/null || true
+npm install
+```
+
 Config local minima en `crit-api/.env`:
 
 ```dotenv
@@ -58,10 +79,13 @@ CHECKIN_API_PORT=3002
 SUPER_ADMIN_API_PORT=3003
 JWT_SECRET=local_jwt_secret_at_least_32_chars
 PLATFORM_JWT_SECRET=local_platform_secret_at_least_32_chars
+CORS_ORIGIN=http://localhost:5173
 PLATFORM_BOOTSTRAP_FULL_NAME=Platform Super Admin
 PLATFORM_BOOTSTRAP_EMAIL=platform.admin@crit.test
 PLATFORM_BOOTSTRAP_PASSWORD=local-platform-password-123
 ```
+
+`CORS_ORIGIN` tiene default local en la API, pero puedes dejarlo explicito en `.env` para que el archivo sea facil de leer.
 
 Validar DB y crear/refrescar el super admin inicial:
 
@@ -106,6 +130,15 @@ npm install
 npm run dev
 ```
 
+En Git Bash:
+
+```bash
+cd ~/apps/crit-project/crit-front
+cp -n .env.example .env 2>/dev/null || true
+npm install
+npm run dev
+```
+
 Config local minima en `crit-front/.env`:
 
 ```dotenv
@@ -146,6 +179,8 @@ npm test
 # crit-front
 npm run build
 ```
+
+En Git Bash usa `bash ./scripts/verify-db.sh` para `crit-db`.
 
 Resultados esperados actuales:
 
