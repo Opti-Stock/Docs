@@ -67,6 +67,20 @@ cp -n .env.example .env 2>/dev/null || true
 npm install
 ```
 
+Si ya tenias un `.env` creado antes de esta guia, revisa que no conserve
+passwords vacios. Estas dos lineas no pueden quedar vacias:
+
+```dotenv
+PLATFORM_BOOTSTRAP_PASSWORD=local-platform-password-123
+BOOTSTRAP_ADMIN_PASSWORD=local-admin-password-123
+```
+
+PowerShell rapido para confirmarlo:
+
+```powershell
+Select-String -Path .env -Pattern "PLATFORM_BOOTSTRAP_PASSWORD|BOOTSTRAP_ADMIN_PASSWORD"
+```
+
 Config local minima en `crit-api/.env`:
 
 ```dotenv
