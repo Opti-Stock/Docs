@@ -171,6 +171,71 @@ npm run platform:bootstrap-super-admin
 npm run admin:bootstrap
 ```
 
+## 2.2. Seed demo completo para smoke visual
+
+Despues del bootstrap obligatorio, ejecuta esta semilla para crear usuarios de
+todos los roles y datos minimos para probar el front completo:
+
+PowerShell:
+
+```powershell
+cd C:\Users\esteb\apps\crit-project\crit-api
+npm run demo:seed-smoke
+```
+
+Git Bash/MINGW64:
+
+```bash
+cd ~/apps/crit-project/crit-api
+npm run demo:seed-smoke
+```
+
+La semilla usa por default el tenant `CRIT-OCC-01` y el password
+`DemoPassword123`. Si necesitas cambiarlo, define variables antes de correrla:
+
+PowerShell:
+
+```powershell
+$env:DEMO_TENANT_CODE="CRIT-OCC-01"
+$env:DEMO_USER_PASSWORD="DemoPassword123"
+npm run demo:seed-smoke
+```
+
+Git Bash/MINGW64:
+
+```bash
+DEMO_TENANT_CODE=CRIT-OCC-01 DEMO_USER_PASSWORD=DemoPassword123 npm run demo:seed-smoke
+```
+
+Usuarios creados por `npm run demo:seed-smoke`:
+
+| Rol | Email | Password | App sugerida |
+| --- | --- | --- | --- |
+| Admin | `demo.admin@crit.test` | `DemoPassword123` | `http://localhost:5173/admin.html` |
+| Direccion | `demo.direccion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion | `demo.recepcion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Coordinador | `demo.coordinador@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Medico | `demo.medico@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Terapeuta | `demo.terapeuta@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Personal de acompanamiento | `demo.acompanamiento@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Paciente/familia | `demo.familia@crit.test` | `DemoPassword123` | Login operativo solo si el front expone flujo familiar |
+
+Tambien crea datos demo idempotentes:
+
+- Clinica `Clinica Demo Smoke`.
+- Cuartos `Consultorio Demo` y `Sala Terapia Demo`.
+- Tipo de cita `Terapia Demo`.
+- Tres pacientes demo.
+- Tres citas del dia actual: una con check-in/asistencia, una inasistencia y una reagendada.
+- Check-in registrado por recepcion.
+- Registros de asistencia `present`, `absent` y `rescheduled`.
+- Una nota medica para validar la vista clinica.
+- Una nota de enlace con destinatarios para recepcion, coordinacion, medico, terapeuta y direccion.
+- Notificaciones demo para validar el centro de notificaciones.
+
+El comando es idempotente: se puede ejecutar varias veces y actualiza los mismos
+datos demo sin duplicarlos.
+
 Levantar APIs en cuatro terminales:
 
 ```powershell
@@ -234,17 +299,28 @@ Entradas locales:
 
 ## 4. Smoke test end-to-end
 
+Camino rapido para validar el front con datos listos:
+
 1. Ejecutar los comandos de `2.1. Bootstrap obligatorio de usuarios locales`.
-2. Entrar a `super-admin.html` con `platform.admin@crit.test` / `local-platform-password-123`.
-3. Crear un CRIT nuevo si quieres probar multi-CRIT, o usar el tenant seed `CRIT-OCC-01` con `admin.local@crit.test`.
-4. Crear el primer usuario admin de ese CRIT desde super admin, o entrar a `admin.html` con el admin demo.
-5. Entrar a la app/admin con el admin creado usando solo email y password.
-6. Crear catalogos minimos: clinica, cuarto, tipo de cita, paciente, usuario recepcion, usuario medico/terapeuta y colaborador asociado.
-7. Crear una cita en Main API/app.
-8. Reprogramar o cancelar la cita si aplica.
-9. Entrar como recepcion o abrir `checkin.html` con una sesion valida y registrar check-in. La respuesta no debe incluir contenido clinico ni notas medicas.
-10. Entrar como clinico, actualizar asistencia y crear/editar nota medica.
-11. Regresar a super admin y verificar el resumen operativo del CRIT sin contenido clinico.
+2. Ejecutar `npm run demo:seed-smoke` desde `crit-api`.
+3. Levantar las cuatro APIs y `crit-front`.
+4. Entrar a `admin.html` con `demo.admin@crit.test` / `DemoPassword123` y validar usuarios, clinicas, cuartos y colaboradores.
+5. Entrar a `/` con `demo.recepcion@crit.test` / `DemoPassword123` y validar check-in/listados operativos.
+6. Entrar a `/` con `demo.terapeuta@crit.test` o `demo.medico@crit.test` / `DemoPassword123` y validar asistencias, notas medicas y notas de enlace.
+7. Entrar a `/` con `demo.direccion@crit.test` / `DemoPassword123` y validar vista global de notas de enlace y resumen operativo.
+
+Camino manual para probar creacion desde cero:
+
+1. Entrar a `super-admin.html` con `platform.admin@crit.test` / `local-platform-password-123`.
+2. Crear un CRIT nuevo si quieres probar multi-CRIT, o usar el tenant seed `CRIT-OCC-01` con `admin.local@crit.test`.
+3. Crear el primer usuario admin de ese CRIT desde super admin, o entrar a `admin.html` con el admin demo.
+4. Entrar a la app/admin con el admin creado usando solo email y password.
+5. Crear catalogos minimos: clinica, cuarto, tipo de cita, paciente, usuario recepcion, usuario medico/terapeuta y colaborador asociado.
+6. Crear una cita en Main API/app.
+7. Reprogramar o cancelar la cita si aplica.
+8. Entrar como recepcion o abrir `checkin.html` con una sesion valida y registrar check-in. La respuesta no debe incluir contenido clinico ni notas medicas.
+9. Entrar como clinico, actualizar asistencia y crear/editar nota medica.
+10. Regresar a super admin y verificar el resumen operativo del CRIT sin contenido clinico.
 
 ## 5. Validaciones esperadas
 
