@@ -214,6 +214,7 @@ Usuarios creados por `npm run demo:seed-smoke`:
 | Admin | `demo.admin@crit.test` | `DemoPassword123` | `http://localhost:5173/admin.html` |
 | Direccion | `demo.direccion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
 | Recepcion | `demo.recepcion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion general | `demo.recepcion.general@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
 | Coordinador | `demo.coordinador@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
 | Medico | `demo.medico@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
 | Terapeuta | `demo.terapeuta@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
