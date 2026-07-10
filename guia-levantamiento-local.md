@@ -211,28 +211,36 @@ Usuarios creados por `npm run demo:seed-smoke`:
 
 | Rol | Email | Password | App sugerida |
 | --- | --- | --- | --- |
-| Admin | `demo.admin@crit.test` | `DemoPassword123` | `http://localhost:5173/admin.html` |
-| Direccion | `demo.direccion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Recepcion | `demo.recepcion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Recepcion general | `demo.recepcion.general@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Coordinador | `demo.coordinador@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Medico | `demo.medico@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Terapeuta | `demo.terapeuta@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
-| Personal de acompanamiento | `demo.acompanamiento@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Admin general | `demo.admin@crit.test` | `DemoPassword123` | `http://localhost:5173/admin.html` |
+| Direccion todas clinicas | `demo.direccion@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion general check-in global | `demo.recepcion.general@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion Norte | `demo.recepcion.norte@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion Sur | `demo.recepcion.sur@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Recepcion Infantil | `demo.recepcion.infantil@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Coordinador Norte | `demo.coordinador.norte@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Coordinador Sur | `demo.coordinador.sur@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Medico Norte | `demo.medico.norte@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Medico Multi Clinica | `demo.medico.multi@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Terapeuta Sur | `demo.terapeuta.sur@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Terapeuta Infantil | `demo.terapeuta.infantil@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Personal AP Norte | `demo.acompanamiento.norte@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
+| Personal AP Sur | `demo.acompanamiento.sur@crit.test` | `DemoPassword123` | `http://localhost:5173/` |
 | Paciente/familia | `demo.familia@crit.test` | `DemoPassword123` | Login operativo solo si el front expone flujo familiar |
+
+Tambien conserva aliases de compatibilidad de la semilla anterior:
+`demo.recepcion@crit.test`, `demo.coordinador@crit.test`,
+`demo.medico@crit.test`, `demo.terapeuta@crit.test` y
+`demo.acompanamiento@crit.test`.
 
 Tambien crea datos demo idempotentes:
 
-- Clinica `Clinica Demo Smoke`.
-- Cuartos `Consultorio Demo` y `Sala Terapia Demo`.
-- Tipo de cita `Terapia Demo`.
-- Tres pacientes demo.
-- Tres citas del dia actual: una con check-in/asistencia, una inasistencia y una reagendada.
-- Check-in registrado por recepcion.
-- Registros de asistencia `present`, `absent` y `rescheduled`.
-- Una nota medica para validar la vista clinica.
-- Una nota de enlace con destinatarios para recepcion, coordinacion, medico, terapeuta y direccion.
-- Notificaciones demo para validar el centro de notificaciones.
+- Clinicas `Smoke Norte Medicina`, `Smoke Sur Terapia` y `Smoke Infantil Lenguaje`.
+- Ocho consultorios/salas repartidos entre esas clinicas.
+- Tipos de cita `Smoke Medicina Fisica`, `Smoke Terapia Fisica`, `Smoke Terapia Lenguaje` y `Smoke Valoracion Inicial`.
+- Ocho pacientes demo, incluido `DEMO-PAT-SIN-001` para probar gafete valido sin citas.
+- Citas en junio, julio y agosto de 2026 con estados `scheduled`, `rescheduled` y `cancelled`.
+- Citas con check-in, sin check-in, asistencia, inasistencia, solicitud de reagendar, nota medica y nota de enlace.
+- Notificaciones demo para recepcion general, terapeutas y destinatarios de notas de enlace.
 
 El comando es idempotente: se puede ejecutar varias veces y actualiza los mismos
 datos demo sin duplicarlos.
