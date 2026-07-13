@@ -323,24 +323,42 @@ DEMO_TENANT_CODE=CRIT-OCC-01 DEMO_USER_PASSWORD=DemoPassword123 npm run demo:see
 cd ..
 ```
 
-### A6. Levantar APIs
+### A6. Levantar APIs con Docker
 
-Abre cuatro terminales, todas desde `crit-project/crit-api`:
+La forma recomendada para probar como equipo es levantar la API con Docker.
+Este `docker compose` inicia los cuatro servicios:
+
+- `main-api` en `3000`.
+- `admin-api` en `3001`.
+- `checkin-api` en `3002`.
+- `super-admin-api` en `3003`.
+
+Importante: primero debe estar arriba `crit-db`, porque `crit-api/docker-compose.yml` se conecta a la red externa `crit-db_default`.
 
 ```bash
-npm run dev:main
+cd crit-api
+docker compose up --build
 ```
 
-```bash
-npm run dev:admin
-```
+Si quieres dejar la terminal libre, puedes usar:
 
 ```bash
-npm run dev:checkin
+cd crit-api
+docker compose up --build -d
 ```
 
+Para ver logs:
+
 ```bash
-npm run dev:super-admin
+cd crit-api
+docker compose logs -f
+```
+
+Para apagar solo las APIs:
+
+```bash
+cd crit-api
+docker compose down
 ```
 
 Health checks:
@@ -361,6 +379,15 @@ curl http://localhost:3000/health
 curl http://localhost:3001/health
 curl http://localhost:3002/health
 curl http://localhost:3003/health
+```
+
+Alternativa para desarrollo sin Docker: si necesitas hot reload o depurar un servicio especifico, puedes levantar cada API con npm en terminales separadas desde `crit-api`:
+
+```bash
+npm run dev:main
+npm run dev:admin
+npm run dev:checkin
+npm run dev:super-admin
 ```
 
 ### A7. Levantar frontend
@@ -482,7 +509,7 @@ cd ..
 
 Usa los mismos pasos de:
 
-- **A6. Levantar APIs**
+- **A6. Levantar APIs con Docker**
 - **A7. Levantar frontend**
 
 ## Usuarios demo
@@ -616,6 +643,10 @@ cd ..
 cd crit-api
 npm run build
 npm test
+# requiere que crit-db siga levantado
+docker compose up --build -d
+docker compose ps
+docker compose down
 cd ..
 
 cd crit-front
